@@ -4,18 +4,47 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <name>OpenWallpaper</name>
-  <summary>Live-Wallpaper für Linux</summary>
+  <summary>Live wallpapers for Linux</summary>
+  <summary xml:lang="de">Live-Wallpaper für Linux</summary>
+  <developer id="io.github.openwallpapers">
+    <name>OpenWallpapers</name>
+  </developer>
   <description>
-    <p>Videos und Bilder als Desktop-Hintergrund, mit Bibliothek, Mediathek, Diashow, Tag-und-Nacht-Wechsel und mehreren Monitoren.</p>
-    <p>Läuft unter X11. Wayland wird noch nicht unterstützt.</p>
+    <p>Set a video or an image as your desktop background. The wallpaper keeps running when you close the window.</p>
+    <p xml:lang="de">Setze ein Video oder Bild als Desktop-Hintergrund. Das Wallpaper läuft weiter, wenn du das Fenster schließt.</p>
+    <p>Keep a library with favorites and tags, and download wallpapers from Wallhaven, Pixabay and Wikimedia Commons. Use a slideshow, switch between a day and a night wallpaper, or set different wallpapers per monitor.</p>
+    <p xml:lang="de">Pflege eine Bibliothek mit Favoriten und Tags und lade Wallpaper von Wallhaven, Pixabay und Wikimedia Commons. Nutze eine Diashow, wechsle zwischen Tag- und Nacht-Wallpaper oder setze pro Monitor ein eigenes.</p>
+    <p>Works on X11. Wayland is not supported yet.</p>
+    <p xml:lang="de">Läuft unter X11. Wayland wird noch nicht unterstützt.</p>
   </description>
   <launchable type="desktop-id">io.github.openwallpapers.OpenWallpaper.desktop</launchable>
   <url type="homepage">https://github.com/OpenWallpapers/openwallpaper</url>
-  <content_rating type="oars-1.1"/>
+  <url type="bugtracker">https://github.com/OpenWallpapers/openwallpaper/issues</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/OpenWallpapers/openwallpaper/v1.0.0/screenshots/library.png</image>
+      <caption>The library with favorites and tags</caption>
+      <caption xml:lang="de">Die Bibliothek mit Favoriten und Tags</caption>
+    </screenshot>
+  </screenshots>
+  <branding>
+    <color type="primary" scheme_preference="light">#f4f4f4</color>
+    <color type="primary" scheme_preference="dark">#0e0e0e</color>
+  </branding>
+  <content_rating type="oars-1.1">
+    <content_attribute id="sex-nudity">intense</content_attribute>
+  </content_rating>
+  <categories>
+    <category>Settings</category>
+    <category>DesktopSettings</category>
+  </categories>
   <supports>
     <control>pointing</control>
     <control>keyboard</control>
   </supports>
+  <requires>
+    <display_length compare="ge">900</display_length>
+  </requires>
   <releases>
     <release version="1.0.0" date="2026-11-03"/>
   </releases>

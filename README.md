@@ -6,10 +6,10 @@ Läuft unter **X11**. Wayland wird noch nicht unterstützt. Getestet habe ich es
 
 ## Installieren
 
-Du brauchst Flatpak und die GNOME-Runtime 50:
+Du brauchst Flatpak und die GNOME-Runtime 51:
 
 ```sh
-flatpak install flathub org.gnome.Sdk//50 org.gnome.Platform//50 org.flatpak.Builder
+flatpak install flathub org.gnome.Sdk//51 org.gnome.Platform//51 org.flatpak.Builder
 git clone https://github.com/OpenWallpapers/openwallpaper.git
 cd openwallpaper
 flatpak run org.flatpak.Builder --user --install --force-clean build-dir io.github.openwallpapers.OpenWallpaper.yml
@@ -29,6 +29,20 @@ Dazu kommen:
 - Wechsel zwischen Tag- und Nacht-Wallpaper nach Uhrzeit
 - Pause bei Vollbild-Fenstern und im Akkubetrieb, Bildrate begrenzen, optional Ton
 - Autostart und eine Sicherung der Bibliothek als ZIP
+
+## Sprachen
+
+Die Oberfläche gibt es auf Englisch und Deutsch. Sie folgt der Systemsprache, in den Einstellungen kannst du sie festlegen. Neue Sprachen kommen über eine Datei in `po/`:
+
+```sh
+msginit -i po/openwallpaper.pot -l fr -o po/fr.po
+```
+
+Danach die Übersetzungen eintragen, `fr` in der Schleife von `io.github.openwallpapers.OpenWallpaper.yml` ergänzen und einen Pull Request öffnen. Neue Texte holst du mit `xgettext` in die Vorlage:
+
+```sh
+xgettext --language=Python --from-code=UTF-8 --keyword=tr --keyword=ntr:1,2 -o po/openwallpaper.pot openwallpaper/*.py
+```
 
 ## Mediathek
 

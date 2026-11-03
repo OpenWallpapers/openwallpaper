@@ -1,13 +1,12 @@
 app-id: io.github.openwallpapers.OpenWallpaper
 runtime: org.gnome.Platform
-runtime-version: '50'
+runtime-version: '51'
 sdk: org.gnome.Sdk
 command: openwallpaper
 
 finish-args:
   - --share=ipc
   - --socket=x11
-  - --socket=fallback-x11
   - --device=dri
   - --share=network
   - --filesystem=~/.config/autostart:create
@@ -19,17 +18,15 @@ modules:
   - name: openwallpaper
     buildsystem: simple
     build-commands:
-      - install -d /app/lib/python3.13/site-packages
-      - cp -r openwallpaper /app/lib/python3.13/site-packages/
+      - install -d /app/lib/python3.14/site-packages
+      - cp -r openwallpaper /app/lib/python3.14/site-packages/
       - install -Dm755 data/openwallpaper.sh /app/bin/openwallpaper
-      - install -Dm644 data/io.github.openwallpapers.OpenWallpaper.desktop
-        /app/share/applications/io.github.openwallpapers.OpenWallpaper.desktop
-      - install -Dm644 data/io.github.openwallpapers.OpenWallpaper.metainfo.xml
-        /app/share/metainfo/io.github.openwallpapers.OpenWallpaper.metainfo.xml
-      - install -Dm644 data/io.github.openwallpapers.OpenWallpaper.svg
-        /app/share/icons/hicolor/scalable/apps/io.github.openwallpapers.OpenWallpaper.svg
-      - install -Dm644 data/io.github.openwallpapers.OpenWallpaper-symbolic.svg
-        /app/share/icons/hicolor/symbolic/apps/io.github.openwallpapers.OpenWallpaper-symbolic.svg
+      - for lang in de; do install -d /app/share/locale/$lang/LC_MESSAGES && msgfmt -o /app/share/locale/$lang/LC_MESSAGES/openwallpaper.mo po/$lang.po; done
+      - install -Dm644 LICENSE /app/share/licenses/io.github.openwallpapers.OpenWallpaper/LICENSE
+      - install -Dm644 data/io.github.openwallpapers.OpenWallpaper.desktop /app/share/applications/io.github.openwallpapers.OpenWallpaper.desktop
+      - install -Dm644 data/io.github.openwallpapers.OpenWallpaper.metainfo.xml /app/share/metainfo/io.github.openwallpapers.OpenWallpaper.metainfo.xml
+      - install -Dm644 data/io.github.openwallpapers.OpenWallpaper.svg /app/share/icons/hicolor/scalable/apps/io.github.openwallpapers.OpenWallpaper.svg
+      - install -Dm644 data/io.github.openwallpapers.OpenWallpaper-symbolic.svg /app/share/icons/hicolor/symbolic/apps/io.github.openwallpapers.OpenWallpaper-symbolic.svg
     sources:
       - type: dir
         path: .
@@ -38,4 +35,5 @@ modules:
           - .flatpak-builder
           - build-dir
           - repo
+          - locale
           - __pycache__

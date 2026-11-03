@@ -6,6 +6,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from .i18n import tr
 from .library import CACHE, MEDIA
 
 UA = "OpenWallpaper/0.5 (open source wallpaper app)"
@@ -28,12 +29,12 @@ def _json(url, **kw):
             return json.load(r)
     except urllib.error.HTTPError as e:
         if e.code == 429:
-            raise RuntimeError("Zu viele Anfragen, bitte kurz warten") from e
+            raise RuntimeError(tr("Too many requests, please wait a moment")) from e
         if e.code in (401, 403):
-            raise RuntimeError("Zugriff abgelehnt, bitte den API-Schlüssel prüfen") from e
-        raise RuntimeError(f"Server antwortet mit Fehler {e.code}") from e
+            raise RuntimeError(tr("Access denied, please check the API key")) from e
+        raise RuntimeError(tr("Server error {}").format(e.code)) from e
     except urllib.error.URLError as e:
-        raise RuntimeError("Keine Verbindung") from e
+        raise RuntimeError(tr("No connection")) from e
 
 
 def _strip(html):
@@ -143,20 +144,20 @@ def translate(query):
 GENERIC_TAGS = {"digital art", "artwork", "illustration", "digital painting", "ultrawide",
                 "wide screen", "widescreen", "4k", "8k", "simple background", "render",
                 "cgi", "wallpaper", "ultra hd", "hd"}
-CAT_DE = {"general": "Allgemein", "anime": "Anime", "people": "Menschen"}
+CAT_DE = {"general": tr("General"), "anime": tr("Anime"), "people": tr("People")}
 
 
 class Wallhaven:
     name = "Wallhaven"
-    media = "Bilder"
+    media = tr("Images")
     has_filters = True
-    sorts = [("Neueste", "date_added"), ("Beliebt · Monat", "toplist:1M"),
-             ("Beliebt · Jahr", "toplist:1y"), ("Beliebt · Woche", "toplist:1w"),
-             ("Meist angesehen", "views"), ("Meist favorisiert", "favorites"),
-             ("Zufällig", "random"), ("Relevanz", "relevance")]
-    categories = ["Anime", "Natur", "Spiele", "Stadt", "Weltraum", "Minimal",
-                  "Dunkel", "Abstrakt"]
-    hint = "Wallhaven durchsuchen, z. B. Wald, dark forest, -people"
+    sorts = [(tr("Newest"), "date_added"), (tr("Popular · month"), "toplist:1M"),
+             (tr("Popular · year"), "toplist:1y"), (tr("Popular · week"), "toplist:1w"),
+             (tr("Most viewed"), "views"), (tr("Most favorited"), "favorites"),
+             (tr("Random"), "random"), (tr("Relevance"), "relevance")]
+    categories = [tr("Anime"), tr("Nature"), tr("Games"), tr("City"), tr("Space"), tr("Minimal"),
+                  tr("Dark"), tr("Abstract")]
+    hint = tr("Search Wallhaven, e.g. forest, dark forest, -people")
 
     def __init__(self):
         self._seed = ""
@@ -203,7 +204,7 @@ class Wallhaven:
                 "id": "wh" + w["id"],
                 "title": f'{CAT_DE.get(w.get("category"), "Wallhaven")} · {w["id"]}',
                 "remote": w["path"], "thumb_url": w["thumbs"]["large"],
-                "source": self.name, "license": "Urheberrecht beim Urheber",
+                "source": self.name, "license": tr("Copyright stays with the author"),
                 "author": "", "url": w.get("url", ""), "purity": w.get("purity", "sfw"),
                 "size": w.get("resolution", ""),
             })
@@ -227,17 +228,17 @@ class Wallhaven:
 
 class Pixabay:
     name = "Pixabay"
-    media = "Videos"
+    media = tr("Videos")
     has_filters = False
-    sorts = [("Beliebt", "popular"), ("Neu", "latest")]
-    categories = ["Natur", "Stadt", "Weltraum", "Wasser", "Abstrakt", "Feuer",
-                  "Wolken", "Regen"]
-    hint = "Pixabay durchsuchen"
+    sorts = [(tr("Popular"), "popular"), (tr("New"), "latest")]
+    categories = [tr("Nature"), tr("City"), tr("Space"), tr("Water"), tr("Abstract"), tr("Fire"),
+                  tr("Clouds"), tr("Rain")]
+    hint = tr("Search Pixabay")
 
     def search(self, query, page, sort, cfg):
         key = cfg.get("pixabay_key", "")
         if not key:
-            raise RuntimeError("Pixabay braucht einen API-Schlüssel (Einstellungen)")
+            raise RuntimeError(tr("Pixabay needs an API key (Settings)"))
         p = {"key": key, "q": query, "order": sort or "popular", "lang": "de",
              "per_page": str(PER_PAGE), "page": str(page + 1), "min_width": "1280"}
         data = _json("https://pixabay.com/api/videos/?" + urllib.parse.urlencode(p))
@@ -266,11 +267,11 @@ class Pixabay:
 
 class Commons:
     name = "Wikimedia Commons"
-    media = "Videos"
+    media = tr("Videos")
     has_filters = False
-    sorts = [("Relevanz", "relevance")]
-    categories = ["Natur", "Stadt", "Weltraum", "Wasser", "Wolken", "Zeitraffer"]
-    hint = "Wikimedia Commons durchsuchen"
+    sorts = [(tr("Relevance"), "relevance")]
+    categories = [tr("Nature"), tr("City"), tr("Space"), tr("Water"), tr("Clouds"), tr("Timelapse")]
+    hint = tr("Search Wikimedia Commons")
     API = "https://commons.wikimedia.org/w/api.php"
     VIDEO_MIME = {"video/webm", "video/mp4", "application/ogg"}
 
@@ -325,7 +326,7 @@ class Commons:
         size = head(url)
         if size and size > MAX_ORIGINAL:
             raise RuntimeError(
-                f"Nur das Original ({size // 1048576} MB) verfügbar, das ist zu groß")
+                tr("Only the original ({} MB) is available, which is too large").format(size // 1048576))
         return url
 
     def download(self, result, progress=None):

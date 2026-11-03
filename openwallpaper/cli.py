@@ -1,18 +1,21 @@
 """Befehle für die Konsole."""
+from .i18n import tr
 
-HELP = """OpenWallpaper
+def help_text():
+    rows = [
+        ("openwallpaper", tr("Open the window")),
+        ("openwallpaper --restore", tr("Start the last wallpaper (autostart)")),
+        ("openwallpaper --list", tr("Show the library")),
+        ("openwallpaper --set NAME", tr("Set a wallpaper (ID or part of the title)")),
+        ("openwallpaper --random", tr("Random wallpaper")),
+        ("openwallpaper --next", tr("Next wallpaper")),
+        ("openwallpaper --pause", tr("Pause")),
+        ("openwallpaper --resume", tr("Resume")),
+        ("openwallpaper --stop", tr("Stop and restore the GNOME background")),
+        ("openwallpaper --status", tr("Show what is running")),
+    ]
+    return "OpenWallpaper\n\n" + "\n".join(f"  {a:<28}{b}" for a, b in rows) + "\n"
 
-  openwallpaper                 Fenster oeffnen
-  openwallpaper --restore       Zuletzt gesetztes Wallpaper starten (Autostart)
-  openwallpaper --list          Bibliothek anzeigen
-  openwallpaper --set NAME      Wallpaper setzen (ID oder Teil des Titels)
-  openwallpaper --random        Zufaelliges Wallpaper
-  openwallpaper --next          Naechstes Wallpaper
-  openwallpaper --pause         Pausieren
-  openwallpaper --resume        Fortsetzen
-  openwallpaper --stop          Stoppen und GNOME-Hintergrund zuruecksetzen
-  openwallpaper --status        Zeigt, was gerade laeuft
-"""
 
 COMMANDS = {"--restore", "--list", "--set", "--random", "--next", "--pause",
             "--resume", "--stop", "--status", "--help", "-h"}
@@ -28,7 +31,7 @@ def run(argv, out=print):
     rest = [a for a in argv if a != cmd and not a.startswith("-")]
 
     if cmd in ("--help", "-h"):
-        out(HELP)
+        out(help_text())
         return 0
     if cmd == "--restore":
         return 0 if library.restore() else 1
@@ -41,7 +44,8 @@ def run(argv, out=print):
         return 0
     if cmd == "--status":
         it = library.current_item()
-        out(f'läuft: {library.is_running()}\naktuell: {it["title"] if it else "-"}\n')
+        out(tr("running: {}\ncurrent: {}\n").format(tr("yes") if library.is_running() else tr("no"),
+                                                         it["title"] if it else "-"))
         return 0
     if cmd == "--stop":
         library.stop_and_restore()
@@ -52,18 +56,18 @@ def run(argv, out=print):
 
     if cmd == "--set":
         if not rest:
-            out("Name oder ID fehlt\n")
+            out(tr("Name or ID missing") + "\n")
             return 2
         it = library.find_item(" ".join(rest))
         if not it:
-            out("Nichts gefunden\n")
+            out(tr("Nothing found") + "\n")
             return 1
     elif cmd == "--random":
         it = library.random_item()
     else:
         it = library.next_item()
     if not it:
-        out("Die Bibliothek ist leer\n")
+        out(tr("The library is empty") + "\n")
         return 1
     library.apply(it)
     out(it["title"] + "\n")

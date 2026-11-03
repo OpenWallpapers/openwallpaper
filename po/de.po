@@ -1,0 +1,835 @@
+# German translation for OpenWallpaper.
+# Copyright (C) 2026 OpenWallpaper contributors
+# This file is distributed under the same license as the OpenWallpaper package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenWallpaper\n"
+"Report-Msgid-Bugs-To: https://github.com/OpenWallpapers/openwallpaper/"
+"issues\n"
+"POT-Creation-Date: 2026-11-03 21:15+0100\n"
+"PO-Revision-Date: 2026-MO-DA HO:MI+ZONE\n"
+"Last-Translator: OpenWallpaper contributors\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+
+#: openwallpaper/app.py:92
+msgid "Recently added"
+msgstr "Zuletzt hinzugefügt"
+
+#: openwallpaper/app.py:92
+msgid "Name"
+msgstr "Name"
+
+#: openwallpaper/app.py:92
+msgid "Favorites first"
+msgstr "Favoriten zuerst"
+
+#: openwallpaper/app.py:93
+msgid "Favorites"
+msgstr "Favoriten"
+
+#: openwallpaper/app.py:244
+msgid "Library"
+msgstr "Bibliothek"
+
+#: openwallpaper/app.py:245 openwallpaper/app.py:1159
+msgid "Discover"
+msgstr "Mediathek"
+
+#: openwallpaper/app.py:253
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: openwallpaper/app.py:255
+msgid "Add files …"
+msgstr "Dateien hinzufügen …"
+
+#: openwallpaper/app.py:256
+msgid "Import folder …"
+msgstr "Ordner importieren …"
+
+#: openwallpaper/app.py:257
+msgid "Import from Steam"
+msgstr "Aus Steam importieren"
+
+#: openwallpaper/app.py:268
+msgid "Stop"
+msgstr "Stoppen"
+
+#: openwallpaper/app.py:273 openwallpaper/app.py:950 openwallpaper/cli.py:12
+msgid "Pause"
+msgstr "Pausieren"
+
+#: openwallpaper/app.py:277 openwallpaper/app.py:1065
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: openwallpaper/app.py:281 openwallpaper/cli.py:11
+msgid "Next wallpaper"
+msgstr "Nächstes Wallpaper"
+
+#: openwallpaper/app.py:285 openwallpaper/cli.py:10
+msgid "Random wallpaper"
+msgstr "Zufälliges Wallpaper"
+
+#: openwallpaper/app.py:308
+msgid "Filter"
+msgstr "Filter"
+
+#: openwallpaper/app.py:365 openwallpaper/app.py:367 openwallpaper/app.py:1086
+msgid "All"
+msgstr "Alle"
+
+#: openwallpaper/app.py:366
+msgid "Portrait 9:16"
+msgstr "Hochformat 9:16"
+
+#: openwallpaper/app.py:367
+msgid "At least 1920×1080"
+msgstr "ab 1920×1080"
+
+#: openwallpaper/app.py:367
+msgid "At least 2560×1440"
+msgstr "ab 2560×1440"
+
+#: openwallpaper/app.py:368
+msgid "At least 3840×2160"
+msgstr "ab 3840×2160"
+
+#: openwallpaper/app.py:390
+msgid "Content"
+msgstr "Inhalt"
+
+#: openwallpaper/app.py:394
+msgid "Safe"
+msgstr "Jugendfrei"
+
+#: openwallpaper/app.py:394 openwallpaper/app.py:799
+msgid "Sketchy"
+msgstr "Freizügig"
+
+#: openwallpaper/app.py:395 openwallpaper/app.py:799
+msgid "NSFW"
+msgstr "Nicht jugendfrei"
+
+#: openwallpaper/app.py:395
+msgid "Needs a Wallhaven API key (Settings)"
+msgstr "Braucht einen Wallhaven-Schlüssel (Einstellungen)"
+
+#: openwallpaper/app.py:402
+msgid "Category"
+msgstr "Kategorie"
+
+#: openwallpaper/app.py:405 openwallpaper/sources.py:147
+msgid "General"
+msgstr "Allgemein"
+
+#: openwallpaper/app.py:405 openwallpaper/sources.py:147
+#: openwallpaper/sources.py:158
+msgid "Anime"
+msgstr "Anime"
+
+#: openwallpaper/app.py:405 openwallpaper/sources.py:147
+msgid "People"
+msgstr "Menschen"
+
+#: openwallpaper/app.py:422 openwallpaper/app.py:782
+msgid "Resolution"
+msgstr "Auflösung"
+
+#: openwallpaper/app.py:423
+msgid "Aspect ratio"
+msgstr "Seitenverhältnis"
+
+#: openwallpaper/app.py:450
+msgid "NSFW content needs a Wallhaven API key (Settings)"
+msgstr "Nicht jugendfreie Inhalte brauchen einen Wallhaven-Schlüssel (Einstellungen)"
+
+#: openwallpaper/app.py:468
+msgid "NSFW content"
+msgstr "Nicht jugendfreie Inhalte"
+
+#: openwallpaper/app.py:469
+msgid "These images are for adults only. Confirm that you are at least 18 years old."
+msgstr "Diese Bilder sind nur für Erwachsene. Bestätige, dass du mindestens 18 Jahre alt bist."
+
+#: openwallpaper/app.py:470
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: openwallpaper/app.py:471
+msgid "I am 18 or older"
+msgstr "Ich bin 18 oder älter"
+
+#: openwallpaper/app.py:492
+msgid "Open source page"
+msgstr "Quelle öffnen"
+
+#: openwallpaper/app.py:495
+msgid "Tags, separated by commas"
+msgstr "Tags, mit Komma getrennt"
+
+#: openwallpaper/app.py:502 openwallpaper/app.py:807
+msgid "Set as wallpaper"
+msgstr "Als Hintergrund setzen"
+
+#: openwallpaper/app.py:506
+msgid "Only on one monitor …"
+msgstr "Nur auf einem Monitor …"
+
+#: openwallpaper/app.py:509
+msgid "Save to library"
+msgstr "In Bibliothek speichern"
+
+#: openwallpaper/app.py:517
+msgid "Remove"
+msgstr "Entfernen"
+
+#: openwallpaper/app.py:565
+msgid "Search library"
+msgstr "Bibliothek durchsuchen"
+
+#: openwallpaper/app.py:614
+msgid "No wallpapers yet"
+msgstr "Noch keine Wallpaper"
+
+#: openwallpaper/app.py:615
+msgid "Add files, drop them into the window or download them from Discover."
+msgstr "Füge Dateien hinzu, ziehe sie ins Fenster oder lade sie aus der Mediathek."
+
+#: openwallpaper/app.py:616
+msgid "Open Discover"
+msgstr "Mediathek öffnen"
+
+#: openwallpaper/app.py:722
+msgid "Discover is not reachable"
+msgstr "Mediathek nicht erreichbar"
+
+#: openwallpaper/app.py:724
+msgid "Try again"
+msgstr "Erneut versuchen"
+
+#: openwallpaper/app.py:741
+#, python-brace-format
+msgid "{} of {}"
+msgstr "{} von {}"
+
+#: openwallpaper/app.py:742
+#, python-brace-format
+msgid "{n} result"
+msgid_plural "{n} results"
+msgstr[0] "{n} Ergebnis"
+msgstr[1] "{n} Ergebnisse"
+
+#: openwallpaper/app.py:747
+msgid "No results"
+msgstr "Keine Ergebnisse"
+
+#: openwallpaper/app.py:748
+msgid "Try a different search term."
+msgstr "Probiere einen anderen Suchbegriff."
+
+#: openwallpaper/app.py:749
+msgid "Reload"
+msgstr "Neu laden"
+
+#: openwallpaper/app.py:781
+msgid "Source"
+msgstr "Quelle"
+
+#: openwallpaper/app.py:781
+msgid "License"
+msgstr "Lizenz"
+
+#: openwallpaper/app.py:782
+msgid "Author"
+msgstr "Urheber"
+
+#: openwallpaper/app.py:796
+msgid "Rating"
+msgstr "Einstufung"
+
+#: openwallpaper/app.py:807
+msgid "Download and set"
+msgstr "Laden und setzen"
+
+#: openwallpaper/app.py:813 openwallpaper/app.py:902
+msgid "Remove from favorites"
+msgstr "Aus Favoriten entfernen"
+
+#: openwallpaper/app.py:813 openwallpaper/app.py:902
+msgid "Add to favorites"
+msgstr "Zu Favoriten"
+
+#: openwallpaper/app.py:819
+#, python-brace-format
+msgid "Only on {}"
+msgstr "Nur auf {}"
+
+#: openwallpaper/app.py:867 openwallpaper/app.py:960 openwallpaper/app.py:1222
+#, python-brace-format
+msgid "Error: {}"
+msgstr "Fehler: {}"
+
+#: openwallpaper/app.py:867
+msgid "File not readable"
+msgstr "Datei nicht lesbar"
+
+#: openwallpaper/app.py:873
+#, python-brace-format
+msgid "Active: {} on {}"
+msgstr "Aktiv: {} auf {}"
+
+#: openwallpaper/app.py:874
+#, python-brace-format
+msgid "Active: {}"
+msgstr "Aktiv: {}"
+
+#: openwallpaper/app.py:894
+#, python-brace-format
+msgid "Saved: {}"
+msgstr "Gespeichert: {}"
+
+#: openwallpaper/app.py:914 openwallpaper/app.py:922 openwallpaper/cli.py:70
+msgid "The library is empty"
+msgstr "Die Bibliothek ist leer"
+
+#: openwallpaper/app.py:933
+msgid "Wallpaper stopped"
+msgstr "Wallpaper gestoppt"
+
+#: openwallpaper/app.py:950 openwallpaper/cli.py:13
+msgid "Resume"
+msgstr "Fortsetzen"
+
+#: openwallpaper/app.py:963
+#, python-brace-format
+msgid "{n} wallpaper added"
+msgid_plural "{n} wallpapers added"
+msgstr[0] "{n} Wallpaper hinzugefügt"
+msgstr[1] "{n} Wallpaper hinzugefügt"
+
+#: openwallpaper/app.py:964
+#, python-brace-format
+msgid "{n} wallpaper imported from Steam"
+msgid_plural "{n} wallpapers imported from Steam"
+msgstr[0] "{n} Wallpaper aus Steam importiert"
+msgstr[1] "{n} Wallpaper aus Steam importiert"
+
+#: openwallpaper/app.py:965
+#, python-brace-format
+msgid "{n} wallpaper restored from the backup"
+msgid_plural "{n} wallpapers restored from the backup"
+msgstr[0] "{n} Wallpaper aus der Sicherung hinzugefügt"
+msgstr[1] "{n} Wallpaper aus der Sicherung hinzugefügt"
+
+#: openwallpaper/app.py:968
+#, python-brace-format
+msgid ", {} already in the library"
+msgstr ", {} schon vorhanden"
+
+#: openwallpaper/app.py:971
+#, python-brace-format
+msgid "The wallpaper is already in the library"
+msgid_plural "All {n} wallpapers are already in the library"
+msgstr[0] "Das Wallpaper ist schon vorhanden"
+msgstr[1] "Alle {n} Wallpaper sind schon vorhanden"
+
+#: openwallpaper/app.py:974
+msgid "Nothing suitable found"
+msgstr "Nichts Passendes gefunden"
+
+#: openwallpaper/app.py:977
+msgid "Choose videos or images"
+msgstr "Videos oder Bilder wählen"
+
+#: openwallpaper/app.py:978
+msgid "Videos and images"
+msgstr "Videos und Bilder"
+
+#: openwallpaper/app.py:994
+msgid "Choose a folder with wallpapers"
+msgstr "Ordner mit Wallpapern wählen"
+
+#: openwallpaper/app.py:1006
+msgid "Importing …"
+msgstr "Importiere …"
+
+#: openwallpaper/app.py:1018
+msgid "Looking for Wallpaper Engine …"
+msgstr "Suche Wallpaper Engine …"
+
+#: openwallpaper/app.py:1025
+msgid "No Steam Workshop folder found. Use “Import folder” instead."
+msgstr "Kein Steam-Workshop-Ordner gefunden. Nutze „Ordner importieren“."
+
+#: openwallpaper/app.py:1069
+msgid "Playback"
+msgstr "Wiedergabe"
+
+#: openwallpaper/app.py:1070
+msgid "Fill screen"
+msgstr "Bild füllen"
+
+#: openwallpaper/app.py:1070
+msgid "Crops the edges instead of showing bars"
+msgstr "Schneidet Ränder ab statt Balken zu zeigen"
+
+#: openwallpaper/app.py:1074
+msgid "Pause when fullscreen"
+msgstr "Bei Vollbild pausieren"
+
+#: openwallpaper/app.py:1074
+msgid "Saves performance in games and videos"
+msgstr "Spart Leistung in Spielen und Videos"
+
+#: openwallpaper/app.py:1077
+msgid "Pause on battery"
+msgstr "Im Akkubetrieb pausieren"
+
+#: openwallpaper/app.py:1077
+msgid "Only on devices with a battery"
+msgstr "Nur bei Geräten mit Akku"
+
+#: openwallpaper/app.py:1080
+msgid "Limit frame rate"
+msgstr "Bildrate begrenzen"
+
+#: openwallpaper/app.py:1080
+msgid "0 = unlimited. 30 noticeably saves power."
+msgstr "0 = unbegrenzt. 30 spart spürbar Leistung."
+
+#: openwallpaper/app.py:1082
+msgid "Volume"
+msgstr "Lautstärke"
+
+#: openwallpaper/app.py:1082
+msgid "0 = off. Muted when fullscreen or paused."
+msgstr "0 = aus. Bei Vollbild und Pause stumm."
+
+#: openwallpaper/app.py:1088 openwallpaper/app.py:1090
+msgid "Slideshow"
+msgstr "Diashow"
+
+#: openwallpaper/app.py:1089
+msgid "Switches between wallpapers. Also applies to “Next” and “Random”."
+msgstr "Wechselt zwischen Wallpapern. Gilt auch für „Nächstes“ und „Zufällig“."
+
+#: openwallpaper/app.py:1092
+msgid "Change every … minutes"
+msgstr "Wechsel alle … Minuten"
+
+#: openwallpaper/app.py:1093
+msgid "Selection"
+msgstr "Auswahl"
+
+#: openwallpaper/app.py:1102
+msgid "Day and night"
+msgstr "Tag und Nacht"
+
+#: openwallpaper/app.py:1103
+msgid "Switches automatically by time of day. Replaces the slideshow."
+msgstr "Wechselt automatisch je nach Uhrzeit. Ersetzt die Diashow."
+
+#: openwallpaper/app.py:1106
+msgid "Schedule"
+msgstr "Zeitplan"
+
+#: openwallpaper/app.py:1109
+msgid "Choose a day and a night wallpaper first"
+msgstr "Wähle zuerst ein Tag- und ein Nacht-Wallpaper"
+
+#: openwallpaper/app.py:1110
+msgid "Day"
+msgstr "Tag"
+
+#: openwallpaper/app.py:1111
+msgid "Night"
+msgstr "Nacht"
+
+#: openwallpaper/app.py:1127
+msgid "Day starts at (hour)"
+msgstr "Tag beginnt um (Uhr)"
+
+#: openwallpaper/app.py:1128
+msgid "Night starts at (hour)"
+msgstr "Nacht beginnt um (Uhr)"
+
+#: openwallpaper/app.py:1130
+msgid "At least two wallpapers needed"
+msgstr "Mindestens zwei Wallpaper nötig"
+
+#: openwallpaper/app.py:1131
+msgid "Add some to the library."
+msgstr "Füge welche zur Bibliothek hinzu."
+
+#: openwallpaper/app.py:1135
+msgid "Monitors"
+msgstr "Monitore"
+
+#: openwallpaper/app.py:1136
+msgid "Pick a wallpaper in the library and set it for one monitor only."
+msgstr "Wähle ein Wallpaper in der Bibliothek und setze es nur für einen Monitor."
+
+#: openwallpaper/app.py:1140
+msgid "Same as the others"
+msgstr "Wie die anderen"
+
+#: openwallpaper/app.py:1141
+msgid "Same on all monitors"
+msgstr "Alle Monitore gleich"
+
+#: openwallpaper/app.py:1141
+msgid "Removes individual assignments"
+msgstr "Entfernt einzelne Zuweisungen"
+
+#: openwallpaper/app.py:1142
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: openwallpaper/app.py:1144
+msgid "Reset done"
+msgstr "Zurückgesetzt"
+
+#: openwallpaper/app.py:1149
+msgid "System"
+msgstr "System"
+
+#: openwallpaper/app.py:1150
+msgid "Start at login"
+msgstr "Beim Anmelden starten"
+
+#: openwallpaper/app.py:1152
+msgid "Set still image in GNOME"
+msgstr "Standbild in GNOME setzen"
+
+#: openwallpaper/app.py:1153
+msgid "For the overview and lock screen. In the Flatpak this needs the GNOME extension from the gnome-extension folder."
+msgstr "Für Übersicht und Sperrbildschirm. Im Flatpak braucht es die GNOME-Erweiterung aus dem Ordner gnome-extension."
+
+#: openwallpaper/app.py:1160
+msgid "Pixabay needs a free key from pixabay.com/api/docs."
+msgstr "Pixabay braucht einen kostenlosen Schlüssel von pixabay.com/api/docs."
+
+#: openwallpaper/app.py:1161
+msgid "Pixabay API key"
+msgstr "Pixabay-API-Schlüssel"
+
+#: openwallpaper/app.py:1165
+msgid "Wallhaven API key (for NSFW content)"
+msgstr "Wallhaven-API-Schlüssel (für nicht jugendfreie Inhalte)"
+
+#: openwallpaper/app.py:1178
+msgid "Backup"
+msgstr "Sicherung"
+
+#: openwallpaper/app.py:1179
+msgid "Backs up the library, tags, favorites and settings. API keys are not included."
+msgstr "Sichert Bibliothek, Tags, Favoriten und Einstellungen. Der Pixabay-Schlüssel wird nicht gesichert."
+
+#: openwallpaper/app.py:1180
+msgid "Create backup"
+msgstr "Sicherung erstellen"
+
+#: openwallpaper/app.py:1180
+msgid "ZIP file with all wallpapers"
+msgstr "ZIP-Datei mit allen Wallpapern"
+
+#: openwallpaper/app.py:1181
+msgid "Export"
+msgstr "Exportieren"
+
+#: openwallpaper/app.py:1185
+msgid "Restore backup"
+msgstr "Sicherung einspielen"
+
+#: openwallpaper/app.py:1185
+msgid "Adds missing wallpapers"
+msgstr "Fügt fehlende Wallpaper hinzu"
+
+#: openwallpaper/app.py:1186
+msgid "Import"
+msgstr "Importieren"
+
+#: openwallpaper/app.py:1192
+msgid "Storage"
+msgstr "Speicher"
+
+#: openwallpaper/app.py:1194
+msgid "Clear cache"
+msgstr "Zwischenspeicher leeren"
+
+#: openwallpaper/app.py:1195
+#, python-brace-format
+msgid "{mb} MB of thumbnails · {n} wallpaper in the library"
+msgid_plural "{mb} MB of thumbnails · {n} wallpapers in the library"
+msgstr[0] "{mb} MB Vorschaubilder · {n} Wallpaper in der Bibliothek"
+msgstr[1] "{mb} MB Vorschaubilder · {n} Wallpaper in der Bibliothek"
+
+#: openwallpaper/app.py:1198
+msgid "Clear"
+msgstr "Leeren"
+
+#: openwallpaper/app.py:1200
+msgid "Cleared"
+msgstr "Geleert"
+
+#: openwallpaper/app.py:1200
+msgid "Cache cleared"
+msgstr "Zwischenspeicher geleert"
+
+#: openwallpaper/app.py:1207
+#, python-brace-format
+msgid "Version {} · GPL-3.0-or-later"
+msgstr "Version {} · GPL-3.0-or-later"
+
+#: openwallpaper/app.py:1212
+msgid "Save backup"
+msgstr "Sicherung speichern"
+
+#: openwallpaper/app.py:1212
+msgid "openwallpaper-backup.zip"
+msgstr "openwallpaper-sicherung.zip"
+
+#: openwallpaper/app.py:1220
+msgid "Creating backup …"
+msgstr "Erstelle Sicherung …"
+
+#: openwallpaper/app.py:1223
+#, python-brace-format
+msgid "Backup with {n} wallpaper created"
+msgid_plural "Backup with {n} wallpapers created"
+msgstr[0] "Sicherung mit {n} Wallpaper erstellt"
+msgstr[1] "Sicherung mit {n} Wallpapern erstellt"
+
+#: openwallpaper/app.py:1226
+msgid "Choose a backup"
+msgstr "Sicherung wählen"
+
+#: openwallpaper/app.py:1227
+msgid "OpenWallpaper backup"
+msgstr "OpenWallpaper-Sicherung"
+
+#: openwallpaper/app.py:1239
+msgid "Restoring backup …"
+msgstr "Spiele Sicherung ein …"
+
+#: openwallpaper/cli.py:6
+msgid "Open the window"
+msgstr "Fenster öffnen"
+
+#: openwallpaper/cli.py:7
+msgid "Start the last wallpaper (autostart)"
+msgstr "Zuletzt gesetztes Wallpaper starten (Autostart)"
+
+#: openwallpaper/cli.py:8
+msgid "Show the library"
+msgstr "Bibliothek anzeigen"
+
+#: openwallpaper/cli.py:9
+msgid "Set a wallpaper (ID or part of the title)"
+msgstr "Wallpaper setzen (ID oder Teil des Titels)"
+
+#: openwallpaper/cli.py:14
+msgid "Stop and restore the GNOME background"
+msgstr "Stoppen und GNOME-Hintergrund zurücksetzen"
+
+#: openwallpaper/cli.py:15
+msgid "Show what is running"
+msgstr "Zeigt, was gerade läuft"
+
+#: openwallpaper/cli.py:47
+#, python-brace-format
+msgid "running: {}\ncurrent: {}\n"
+msgstr "läuft: {}\naktuell: {}\n"
+
+#: openwallpaper/cli.py:47
+msgid "yes"
+msgstr "ja"
+
+#: openwallpaper/cli.py:47
+msgid "no"
+msgstr "nein"
+
+#: openwallpaper/cli.py:59
+msgid "Name or ID missing"
+msgstr "Name oder ID fehlt"
+
+#: openwallpaper/cli.py:63
+msgid "Nothing found"
+msgstr "Nichts gefunden"
+
+#: openwallpaper/library.py:189 openwallpaper/library.py:221
+msgid "Local"
+msgstr "Lokal"
+
+#: openwallpaper/library.py:309
+msgid "Rights belong to the authors"
+msgstr "Urheber beachten"
+
+#: openwallpaper/library.py:335
+msgid "This is not an OpenWallpaper backup"
+msgstr "Das ist keine OpenWallpaper-Sicherung"
+
+#: openwallpaper/renderer.py:216
+msgid "No video sink available"
+msgstr "Keine Videosenke verfügbar"
+
+#: openwallpaper/renderer.py:271
+#, python-brace-format
+msgid "Error ({}):"
+msgstr "Fehler ({}):"
+
+#: openwallpaper/renderer.py:406
+msgid "No X11 display (Wayland is not supported yet)"
+msgstr "Kein X11-Display (Wayland wird noch nicht unterstützt)"
+
+#: openwallpaper/sources.py:32
+msgid "Too many requests, please wait a moment"
+msgstr "Zu viele Anfragen, bitte kurz warten"
+
+#: openwallpaper/sources.py:34
+msgid "Access denied, please check the API key"
+msgstr "Zugriff abgelehnt, bitte den API-Schlüssel prüfen"
+
+#: openwallpaper/sources.py:35
+#, python-brace-format
+msgid "Server error {}"
+msgstr "Server antwortet mit Fehler {}"
+
+#: openwallpaper/sources.py:37
+msgid "No connection"
+msgstr "Keine Verbindung"
+
+#: openwallpaper/sources.py:152
+msgid "Images"
+msgstr "Bilder"
+
+#: openwallpaper/sources.py:154
+msgid "Newest"
+msgstr "Neueste"
+
+#: openwallpaper/sources.py:154
+msgid "Popular · month"
+msgstr "Beliebt · Monat"
+
+#: openwallpaper/sources.py:155
+msgid "Popular · year"
+msgstr "Beliebt · Jahr"
+
+#: openwallpaper/sources.py:155
+msgid "Popular · week"
+msgstr "Beliebt · Woche"
+
+#: openwallpaper/sources.py:156
+msgid "Most viewed"
+msgstr "Meist angesehen"
+
+#: openwallpaper/sources.py:156
+msgid "Most favorited"
+msgstr "Meist favorisiert"
+
+#: openwallpaper/sources.py:157
+msgid "Random"
+msgstr "Zufällig"
+
+#: openwallpaper/sources.py:157 openwallpaper/sources.py:272
+msgid "Relevance"
+msgstr "Relevanz"
+
+#: openwallpaper/sources.py:158 openwallpaper/sources.py:234
+#: openwallpaper/sources.py:273
+msgid "Nature"
+msgstr "Natur"
+
+#: openwallpaper/sources.py:158
+msgid "Games"
+msgstr "Spiele"
+
+#: openwallpaper/sources.py:158 openwallpaper/sources.py:234
+#: openwallpaper/sources.py:273
+msgid "City"
+msgstr "Stadt"
+
+#: openwallpaper/sources.py:158 openwallpaper/sources.py:234
+#: openwallpaper/sources.py:273
+msgid "Space"
+msgstr "Weltraum"
+
+#: openwallpaper/sources.py:158
+msgid "Minimal"
+msgstr "Minimal"
+
+#: openwallpaper/sources.py:159
+msgid "Dark"
+msgstr "Dunkel"
+
+#: openwallpaper/sources.py:159 openwallpaper/sources.py:234
+msgid "Abstract"
+msgstr "Abstrakt"
+
+#: openwallpaper/sources.py:160
+msgid "Search Wallhaven, e.g. forest, dark forest, -people"
+msgstr "Wallhaven durchsuchen, z. B. Wald, dark forest, -people"
+
+#: openwallpaper/sources.py:207
+msgid "Copyright stays with the author"
+msgstr "Urheberrecht beim Urheber"
+
+#: openwallpaper/sources.py:231 openwallpaper/sources.py:270
+msgid "Videos"
+msgstr "Videos"
+
+#: openwallpaper/sources.py:233
+msgid "Popular"
+msgstr "Beliebt"
+
+#: openwallpaper/sources.py:233
+msgid "New"
+msgstr "Neu"
+
+#: openwallpaper/sources.py:234 openwallpaper/sources.py:273
+msgid "Water"
+msgstr "Wasser"
+
+#: openwallpaper/sources.py:234
+msgid "Fire"
+msgstr "Feuer"
+
+#: openwallpaper/sources.py:235 openwallpaper/sources.py:273
+msgid "Clouds"
+msgstr "Wolken"
+
+#: openwallpaper/sources.py:235
+msgid "Rain"
+msgstr "Regen"
+
+#: openwallpaper/sources.py:236
+msgid "Search Pixabay"
+msgstr "Pixabay durchsuchen"
+
+#: openwallpaper/sources.py:241
+msgid "Pixabay needs an API key (Settings)"
+msgstr "Pixabay braucht einen API-Schlüssel (Einstellungen)"
+
+#: openwallpaper/sources.py:273
+msgid "Timelapse"
+msgstr "Zeitraffer"
+
+#: openwallpaper/sources.py:274
+msgid "Search Wikimedia Commons"
+msgstr "Wikimedia Commons durchsuchen"
+
+#: openwallpaper/sources.py:329
+#, python-brace-format
+msgid "Only the original ({} MB) is available, which is too large"
+msgstr "Nur das Original ({} MB) verfügbar, das ist zu groß"

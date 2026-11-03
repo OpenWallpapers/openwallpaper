@@ -11,6 +11,7 @@ gi.require_version("Graphene", "1.0")
 from gi.repository import Adw, Gdk, Gio, GLib, Graphene, Gtk  # noqa: E402
 
 from . import APP_ID, __version__, cli, library, sources  # noqa: E402
+from .i18n import available, lang, NAMES, ntr, num, tr  # noqa: E402
 
 BG, FG = "#0e0e0e", "#f4f4f4"
 
@@ -88,8 +89,8 @@ entry.tags {{ background: alpha({FG}, 0.06); border-radius: 12px; box-shadow: no
 """
 
 CARD_W, CARD_H = 250, 141
-SORT_LIB = [("Zuletzt hinzugefügt", "added"), ("Name", "title"), ("Favoriten zuerst", "fav")]
-FAV_CHIP = "Favoriten"
+SORT_LIB = [(tr("Recently added"), "added"), (tr("Name"), "title"), (tr("Favorites first"), "fav")]
+FAV_CHIP = tr("Favorites")
 
 
 def run_bg(fn, done=None):
@@ -240,8 +241,8 @@ class Window(Adw.ApplicationWindow):
         hb = Adw.HeaderBar()
         tabs = Gtk.Box(spacing=4)
         tabs.add_css_class("tabs")
-        self.tab_lib = Gtk.ToggleButton(label="Bibliothek")
-        self.tab_dis = Gtk.ToggleButton(label="Mediathek", group=self.tab_lib)
+        self.tab_lib = Gtk.ToggleButton(label=tr("Library"))
+        self.tab_dis = Gtk.ToggleButton(label=tr("Discover"), group=self.tab_lib)
         self.tab_lib.set_active(True)
         self.tab_lib.connect("toggled", lambda b: b.get_active() and self._show("library"))
         self.tab_dis.connect("toggled", lambda b: b.get_active() and self._show("discover"))
@@ -249,11 +250,11 @@ class Window(Adw.ApplicationWindow):
         tabs.append(self.tab_dis)
         hb.set_title_widget(tabs)
 
-        add = Gtk.MenuButton(icon_name="list-add-symbolic", tooltip_text="Hinzufügen")
+        add = Gtk.MenuButton(icon_name="list-add-symbolic", tooltip_text=tr("Add"))
         m = Gio.Menu()
-        m.append("Dateien hinzufügen …", "win.add-files")
-        m.append("Ordner importieren …", "win.add-folder")
-        m.append("Aus Steam importieren", "win.steam")
+        m.append(tr("Add files …"), "win.add-files")
+        m.append(tr("Import folder …"), "win.add-folder")
+        m.append(tr("Import from Steam"), "win.steam")
         add.set_menu_model(m)
         hb.pack_start(add)
         self._action("add-files", self._add_files)
@@ -264,24 +265,24 @@ class Window(Adw.ApplicationWindow):
         mon.connect("activate", lambda _a, p: self._apply_monitor(p.get_string()))
         self.add_action(mon)
 
-        self.stop_btn = Gtk.Button(label="Stoppen", visible=False)
+        self.stop_btn = Gtk.Button(label=tr("Stop"), visible=False)
         self.stop_btn.add_css_class("stopbtn")
         self.stop_btn.connect("clicked", lambda _b: self._stop())
         hb.pack_start(self.stop_btn)
         self.pause_btn = Gtk.Button(icon_name="media-playback-pause-symbolic",
-                                    tooltip_text="Pausieren", visible=False)
+                                    tooltip_text=tr("Pause"), visible=False)
         self.pause_btn.connect("clicked", lambda _b: self._toggle_pause())
         hb.pack_start(self.pause_btn)
 
-        gear = Gtk.Button(icon_name="emblem-system-symbolic", tooltip_text="Einstellungen")
+        gear = Gtk.Button(icon_name="emblem-system-symbolic", tooltip_text=tr("Settings"))
         gear.connect("clicked", lambda _b: self._settings())
         hb.pack_end(gear)
         nxt = Gtk.Button(icon_name="media-skip-forward-symbolic",
-                         tooltip_text="Nächstes Wallpaper")
+                         tooltip_text=tr("Next wallpaper"))
         nxt.connect("clicked", lambda _b: self._next())
         hb.pack_end(nxt)
         shuffle = Gtk.Button(icon_name="media-playlist-shuffle-symbolic",
-                             tooltip_text="Zufälliges Wallpaper")
+                             tooltip_text=tr("Random wallpaper"))
         shuffle.connect("clicked", lambda _b: self._random())
         hb.pack_end(shuffle)
         return hb
@@ -304,7 +305,7 @@ class Window(Adw.ApplicationWindow):
         self.count_lbl = Gtk.Label(xalign=1, valign=Gtk.Align.CENTER)
         self.count_lbl.add_css_class("dim")
         row.append(self.count_lbl)
-        self.filter_btn = Gtk.MenuButton(label="Filter", valign=Gtk.Align.CENTER)
+        self.filter_btn = Gtk.MenuButton(label=tr("Filter"), valign=Gtk.Align.CENTER)
         self.filter_btn.add_css_class("chip")
         self.filter_btn.set_popover(self._build_filters())
         row.append(self.filter_btn)
@@ -361,10 +362,10 @@ class Window(Adw.ApplicationWindow):
         main.append(self.stack)
         return main
 
-    RATIOS = [("Alle", ""), ("16:9", "16x9"), ("16:10", "16x10"), ("21:9", "21x9"),
-              ("32:9", "32x9"), ("Hochformat 9:16", "9x16")]
-    RESOLUTIONS = [("Alle", ""), ("ab 1920×1080", "1920x1080"), ("ab 2560×1440", "2560x1440"),
-                   ("ab 3840×2160", "3840x2160")]
+    RATIOS = [(tr("All"), ""), ("16:9", "16x9"), ("16:10", "16x10"), ("21:9", "21x9"),
+              ("32:9", "32x9"), (tr("Portrait 9:16"), "9x16")]
+    RESOLUTIONS = [(tr("All"), ""), (tr("At least 1920×1080"), "1920x1080"), (tr("At least 2560×1440"), "2560x1440"),
+                   (tr("At least 3840×2160"), "3840x2160")]
 
     def _filter_chip(self, label, active, cb, tip=None):
         b = Gtk.ToggleButton(label=label, active=active)
@@ -386,22 +387,22 @@ class Window(Adw.ApplicationWindow):
             lbl.add_css_class("cap")
             return lbl
 
-        box.append(head("Inhalt"))
+        box.append(head(tr("Content")))
         row = Gtk.Box(spacing=6)
         self.f_purity = []
         for i, (name, tip) in enumerate([
-                ("Jugendfrei", None), ("Freizügig", None),
-                ("Nicht jugendfrei", "Braucht einen Wallhaven-Schlüssel (Einstellungen)")]):
+                (tr("Safe"), None), (tr("Sketchy"), None),
+                (tr("NSFW"), tr("Needs a Wallhaven API key (Settings)"))]):
             b = self._filter_chip(name, cfg["wh_purity"][i] == "1",
                                   lambda btn, i=i: self._on_purity(btn, i), tip)
             self.f_purity.append(b)
             row.append(b)
         box.append(row)
 
-        box.append(head("Kategorie"))
+        box.append(head(tr("Category")))
         row = Gtk.Box(spacing=6)
         self.f_cats = []
-        for i, name in enumerate(["Allgemein", "Anime", "Menschen"]):
+        for i, name in enumerate([tr("General"), tr("Anime"), tr("People")]):
             b = self._filter_chip(name, cfg["wh_categories"][i] == "1",
                                   lambda btn, i=i: self._on_cat(btn, i))
             self.f_cats.append(b)
@@ -418,8 +419,8 @@ class Window(Adw.ApplicationWindow):
                 key, vals[d.get_selected()]))
             r.append(dd)
             return r
-        box.append(dropdown("Auflösung", self.RESOLUTIONS, "wh_atleast"))
-        box.append(dropdown("Seitenverhältnis", self.RATIOS, "wh_ratio"))
+        box.append(dropdown(tr("Resolution"), self.RESOLUTIONS, "wh_atleast"))
+        box.append(dropdown(tr("Aspect ratio"), self.RATIOS, "wh_ratio"))
         pop.set_child(box)
         return pop
 
@@ -446,7 +447,7 @@ class Window(Adw.ApplicationWindow):
         if i == 2 and btn.get_active():
             if not cfg.get("wallhaven_key"):
                 self._set_purity_lock(btn, False)
-                self._toast("Nicht jugendfreie Inhalte brauchen einen Wallhaven-Schlüssel (Einstellungen)")
+                self._toast(tr("NSFW content needs a Wallhaven API key (Settings)"))
                 return
             if not cfg.get("adult_ok"):
                 self._set_purity_lock(btn, False)
@@ -464,10 +465,10 @@ class Window(Adw.ApplicationWindow):
         self._purity_lock = False
 
     def _confirm_adult(self):
-        dlg = Adw.AlertDialog(heading="Nicht jugendfreie Inhalte",
-                              body="Diese Bilder sind nur für Erwachsene. Bestätige, dass du mindestens 18 Jahre alt bist.")
-        dlg.add_response("no", "Abbrechen")
-        dlg.add_response("yes", "Ich bin 18 oder älter")
+        dlg = Adw.AlertDialog(heading=tr("NSFW content"),
+                              body=tr("These images are for adults only. Confirm that you are at least 18 years old."))
+        dlg.add_response("no", tr("Cancel"))
+        dlg.add_response("yes", tr("I am 18 or older"))
         dlg.set_default_response("no")
 
         def answered(d, r):
@@ -488,24 +489,24 @@ class Window(Adw.ApplicationWindow):
         self.p_grid = Gtk.Grid(column_spacing=16, row_spacing=6)
         self.p_taglbl = Gtk.Label(xalign=0, wrap=True, max_width_chars=30)
         self.p_taglbl.add_css_class("dim")
-        self.p_link = Gtk.LinkButton(uri="https://wallhaven.cc", label="Quelle öffnen",
+        self.p_link = Gtk.LinkButton(uri="https://wallhaven.cc", label=tr("Open source page"),
                                      halign=Gtk.Align.START)
         self.p_link.add_css_class("flat")
-        self.p_tags = Gtk.Entry(placeholder_text="Tags, mit Komma getrennt")
+        self.p_tags = Gtk.Entry(placeholder_text=tr("Tags, separated by commas"))
         self.p_tags.add_css_class("tags")
         self.p_tags.connect("activate", lambda _e: self._save_tags())
         focus = Gtk.EventControllerFocus()
         focus.connect("leave", lambda _c: self._save_tags())
         self.p_tags.add_controller(focus)
         self.p_progress = Gtk.ProgressBar(visible=False)
-        self.p_apply = Gtk.Button(label="Als Hintergrund setzen")
+        self.p_apply = Gtk.Button(label=tr("Set as wallpaper"))
         self.p_apply.add_css_class("suggested-action")
         self.p_apply.add_css_class("pill-main")
         self.p_apply.connect("clicked", lambda _b: self._apply())
-        self.p_mon = Gtk.MenuButton(label="Nur auf einem Monitor …")
+        self.p_mon = Gtk.MenuButton(label=tr("Only on one monitor …"))
         self.p_mon.add_css_class("pill-sub")
         self.p_mon.add_css_class("flat")
-        self.p_save = Gtk.Button(label="In Bibliothek speichern")
+        self.p_save = Gtk.Button(label=tr("Save to library"))
         self.p_save.add_css_class("pill-sub")
         self.p_save.add_css_class("flat")
         self.p_save.connect("clicked", lambda _b: self._save_only())
@@ -513,7 +514,7 @@ class Window(Adw.ApplicationWindow):
         self.p_fav.add_css_class("pill-sub")
         self.p_fav.add_css_class("flat")
         self.p_fav.connect("clicked", lambda _b: self._fav())
-        self.p_remove = Gtk.Button(label="Entfernen")
+        self.p_remove = Gtk.Button(label=tr("Remove"))
         self.p_remove.add_css_class("pill-sub")
         self.p_remove.add_css_class("flat")
         self.p_remove.connect("clicked", lambda _b: self._remove())
@@ -561,7 +562,7 @@ class Window(Adw.ApplicationWindow):
         self.count_lbl.set_text("")
         self._clear()
         if view == "library":
-            self.search.set_placeholder_text("Bibliothek durchsuchen")
+            self.search.set_placeholder_text(tr("Search library"))
             self._set_sorts(SORT_LIB)
             self._set_chips([FAV_CHIP] + library.all_tags())
             self.chip_scroll.set_visible(True)
@@ -610,9 +611,9 @@ class Window(Adw.ApplicationWindow):
             self._on_filter(self.search)
         else:
             self._empty_mode = "lib"
-            self.empty.set_title("Noch keine Wallpaper")
-            self.empty.set_description("Füge Dateien hinzu, ziehe sie ins Fenster oder lade sie aus der Mediathek.")
-            self.empty_btn.set_label("Mediathek öffnen")
+            self.empty.set_title(tr("No wallpapers yet"))
+            self.empty.set_description(tr("Add files, drop them into the window or download them from Discover."))
+            self.empty_btn.set_label(tr("Open Discover"))
             self.stack.set_visible_child_name("empty")
 
     def _empty_action(self):
@@ -718,9 +719,9 @@ class Window(Adw.ApplicationWindow):
             if err:
                 if first:
                     self._empty_mode = "retry"
-                    self.empty.set_title("Mediathek nicht erreichbar")
+                    self.empty.set_title(tr("Discover is not reachable"))
                     self.empty.set_description(str(err))
-                    self.empty_btn.set_label("Erneut versuchen")
+                    self.empty_btn.set_label(tr("Try again"))
                     self.stack.set_visible_child_name("empty")
                 else:
                     self._toast(str(err))
@@ -737,15 +738,15 @@ class Window(Adw.ApplicationWindow):
                            lambda p, e, c=c: p and set_pic(c.pic, p))
             self.page += 1
             tot = getattr(self, "total", None) if page or res.total is None else res.total
-            self.count_lbl.set_text(f"{len(self.cards)} von {tot:,}".replace(",", ".")
-                                    if tot else f"{len(self.cards)} Ergebnisse")
+            self.count_lbl.set_text(tr("{} of {}").format(len(self.cards), num(tot)) if tot else
+                                    ntr("{n} result", "{n} results", len(self.cards)).format(n=len(self.cards)))
             if not res:
                 self.exhausted = True
                 if first:
                     self._empty_mode = "retry"
-                    self.empty.set_title("Keine Ergebnisse")
-                    self.empty.set_description("Probiere einen anderen Suchbegriff.")
-                    self.empty_btn.set_label("Neu laden")
+                    self.empty.set_title(tr("No results"))
+                    self.empty.set_description(tr("Try a different search term."))
+                    self.empty_btn.set_label(tr("Reload"))
                     self.stack.set_visible_child_name("empty")
             elif len(self.cards) < 12:
                 GLib.idle_add(self._discover)
@@ -777,8 +778,8 @@ class Window(Adw.ApplicationWindow):
         tags = d.get("tags") or []
         self.p_taglbl.set_text(" · ".join(tags) if self.view == "discover" else "")
         self.p_taglbl.set_visible(bool(tags) and self.view == "discover")
-        rows = [("Quelle", d.get("source")), ("Lizenz", d.get("license")),
-                ("Urheber", d.get("author")), ("Auflösung", d.get("size"))]
+        rows = [(tr("Source"), d.get("source")), (tr("License"), d.get("license")),
+                (tr("Author"), d.get("author")), (tr("Resolution"), d.get("size"))]
         while (c := self.p_grid.get_first_child()):
             self.p_grid.remove(c)
         r = 0
@@ -792,10 +793,10 @@ class Window(Adw.ApplicationWindow):
             self.p_grid.attach(vl, 1, r, 1, 1)
             r += 1
         if d.get("purity") and d["purity"] != "sfw":
-            kl = Gtk.Label(label="Einstufung", xalign=0, yalign=0)
+            kl = Gtk.Label(label=tr("Rating"), xalign=0, yalign=0)
             kl.add_css_class("key")
             self.p_grid.attach(kl, 0, r, 1, 1)
-            self.p_grid.attach(Gtk.Label(label={"sketchy": "Freizügig", "nsfw": "Nicht jugendfrei"}.get(
+            self.p_grid.attach(Gtk.Label(label={"sketchy": tr("Sketchy"), "nsfw": tr("NSFW")}.get(
                 d["purity"], d["purity"]), xalign=0), 1, r, 1, 1)
         self.p_link.set_visible(bool(d.get("url")))
         if d.get("url"):
@@ -803,19 +804,19 @@ class Window(Adw.ApplicationWindow):
         if self.selected is None:
             return
         local = self.view == "library"
-        self.p_apply.set_label("Als Hintergrund setzen" if local else "Laden und setzen")
+        self.p_apply.set_label(tr("Set as wallpaper") if local else tr("Download and set"))
         self.p_save.set_visible(not local)
         self.p_remove.set_visible(local)
         self.p_fav.set_visible(local)
         self.p_tags.set_visible(local)
         self.p_tags.set_text(", ".join(d.get("tags", [])))
-        self.p_fav.set_label("Aus Favoriten entfernen" if d.get("fav") else "Zu Favoriten")
+        self.p_fav.set_label(tr("Remove from favorites") if d.get("fav") else tr("Add to favorites"))
         mons = monitor_names()
         self.p_mon.set_visible(local and len(mons) > 1)
         if local and len(mons) > 1:
             menu = Gio.Menu()
             for n in mons:
-                item = Gio.MenuItem.new(f"Nur auf {n}", None)
+                item = Gio.MenuItem.new(tr("Only on {}").format(n), None)
                 item.set_action_and_target_value("win.mon", GLib.Variant.new_string(n))
                 menu.append_item(item)
             self.p_mon.set_menu_model(menu)
@@ -863,13 +864,14 @@ class Window(Adw.ApplicationWindow):
             self.p_apply.set_sensitive(True)
             self.p_save.set_sensitive(True)
             if err or not item:
-                self._toast(f"Fehler: {err or 'Datei nicht lesbar'}")
+                self._toast(tr("Error: {}").format(err or tr("File not readable")))
                 return
             then(item)
         run_bg(work, done)
 
     def _set(self, item, monitor=None):
-        label = f"Aktiv: {item['title']}" + (f" auf {monitor}" if monitor else "")
+        label = (tr("Active: {} on {}").format(item["title"], monitor) if monitor
+                 else tr("Active: {}").format(item["title"]))
         run_bg(lambda: library.apply(item, monitor=monitor), lambda *_: (
             self._toast(label), self._poll_running()))
 
@@ -889,7 +891,7 @@ class Window(Adw.ApplicationWindow):
     def _save_only(self):
         if self.selected:
             self._download(self.selected.data, lambda it: self._toast(
-                f"Gespeichert: {it['title']}"))
+                tr("Saved: {}").format(it["title"])))
 
     def _fav(self):
         if not self.selected:
@@ -897,7 +899,7 @@ class Window(Adw.ApplicationWindow):
         d = self.selected.data
         d["fav"] = library.toggle_fav(d["id"])
         self.selected.badge.set_visible(d["fav"])
-        self.p_fav.set_label("Aus Favoriten entfernen" if d["fav"] else "Zu Favoriten")
+        self.p_fav.set_label(tr("Remove from favorites") if d["fav"] else tr("Add to favorites"))
 
     def _remove(self):
         if not self.selected:
@@ -909,7 +911,7 @@ class Window(Adw.ApplicationWindow):
     def _random(self):
         it = library.random_item()
         if not it:
-            return self._toast("Die Bibliothek ist leer")
+            return self._toast(tr("The library is empty"))
         self._set(it)
         if self.view == "library":
             GLib.timeout_add(600, lambda: self._refresh_library() or False)
@@ -917,7 +919,7 @@ class Window(Adw.ApplicationWindow):
     def _next(self):
         it = library.next_item()
         if not it:
-            return self._toast("Die Bibliothek ist leer")
+            return self._toast(tr("The library is empty"))
         self._set(it)
         if self.view == "library":
             GLib.timeout_add(600, lambda: self._refresh_library() or False)
@@ -928,7 +930,7 @@ class Window(Adw.ApplicationWindow):
         def done(*_):
             self.stop_btn.set_sensitive(True)
             self._poll_running()
-            self._toast("Wallpaper gestoppt")
+            self._toast(tr("Wallpaper stopped"))
             if self.view == "library":
                 self._refresh_library()
         run_bg(library.stop_and_restore, done)
@@ -945,25 +947,35 @@ class Window(Adw.ApplicationWindow):
         paused = bool(library.load_config().get("paused"))
         self.pause_btn.set_icon_name("media-playback-start-symbolic" if paused
                                      else "media-playback-pause-symbolic")
-        self.pause_btn.set_tooltip_text("Fortsetzen" if paused else "Pausieren")
+        self.pause_btn.set_tooltip_text(tr("Resume") if paused else tr("Pause"))
         return True
 
-    def _after_import(self, new, err, label="hinzugefügt", dup=0):
+    def _after_import(self, new, err, kind="added", dup=0):
         self.tab_lib.set_active(True)
         if self.view != "library":
             self._show("library")
         else:
             self._refresh_library()
         if err:
-            self._toast(f"Fehler: {err}")
+            self._toast(tr("Error: {}").format(err))
         elif new:
-            self._toast(f"{new} Wallpaper {label}" + (f", {dup} schon vorhanden" if dup else ""))
+            text = {
+                "added": ntr("{n} wallpaper added", "{n} wallpapers added", new),
+                "steam": ntr("{n} wallpaper imported from Steam", "{n} wallpapers imported from Steam", new),
+                "backup": ntr("{n} wallpaper restored from the backup", "{n} wallpapers restored from the backup", new),
+            }[kind].format(n=new)
+            if dup:
+                text += tr(", {} already in the library").format(dup)
+            self._toast(text)
+        elif dup:
+            self._toast(ntr("The wallpaper is already in the library",
+                            "All {n} wallpapers are already in the library", dup).format(n=dup))
         else:
-            self._toast(f"Alle {dup} schon vorhanden" if dup else "Nichts Passendes gefunden")
+            self._toast(tr("Nothing suitable found"))
 
     def _add_files(self):
-        dlg = Gtk.FileDialog(title="Videos oder Bilder wählen")
-        flt = Gtk.FileFilter(name="Videos und Bilder")
+        dlg = Gtk.FileDialog(title=tr("Choose videos or images"))
+        flt = Gtk.FileFilter(name=tr("Videos and images"))
         for e in sorted(library.VIDEO_EXT | library.IMAGE_EXT):
             flt.add_suffix(e[1:])
         store = Gio.ListStore.new(Gtk.FileFilter)
@@ -979,7 +991,7 @@ class Window(Adw.ApplicationWindow):
         self._import([files.get_item(i).get_path() for i in range(files.get_n_items())])
 
     def _add_folder(self):
-        dlg = Gtk.FileDialog(title="Ordner mit Wallpapern wählen")
+        dlg = Gtk.FileDialog(title=tr("Choose a folder with wallpapers"))
         dlg.select_folder(self, None, self._folder_done)
 
     def _folder_done(self, dlg, res):
@@ -991,7 +1003,7 @@ class Window(Adw.ApplicationWindow):
 
     def _import(self, paths):
         self.stack.set_visible_child_name("load")
-        self._toast("Importiere …")
+        self._toast(tr("Importing …"))
         run_bg(lambda: library.import_paths(paths), lambda r, e: self._after_import(
             r[0] if r else 0, e, dup=r[1] if r else 0))
 
@@ -1003,16 +1015,16 @@ class Window(Adw.ApplicationWindow):
         return True
 
     def _import_steam(self):
-        self._toast("Suche Wallpaper Engine …")
+        self._toast(tr("Looking for Wallpaper Engine …"))
 
         def done(res, err):
             if err:
                 return self._after_import(0, err)
             n, roots = res
             if not roots:
-                self._toast("Kein Steam-Workshop-Ordner gefunden. Nutze „Ordner importieren“.")
+                self._toast(tr("No Steam Workshop folder found. Use “Import folder” instead."))
                 return
-            self._after_import(n, None, "aus Steam importiert")
+            self._after_import(n, None, "steam")
         run_bg(library.import_steam, done)
 
     def _spin(self, title, subtitle, lo, hi, value, key, reapply=True):
@@ -1050,35 +1062,35 @@ class Window(Adw.ApplicationWindow):
         cfg = library.load_config()
         items = [i for i in library.load_items()]
         titles = [i["title"] for i in items]
-        dlg = Adw.PreferencesDialog(title="Einstellungen")
+        dlg = Adw.PreferencesDialog(title=tr("Settings"))
         page = Adw.PreferencesPage()
         dlg.add(page)
 
-        g = Adw.PreferencesGroup(title="Wiedergabe")
-        g.add(self._switch("Bild füllen", "Schneidet Ränder ab statt Balken zu zeigen",
+        g = Adw.PreferencesGroup(title=tr("Playback"))
+        g.add(self._switch(tr("Fill screen"), tr("Crops the edges instead of showing bars"),
                            cfg["fit"] == "fill", lambda on, _r: (
                                library.set_config(fit="fill" if on else "fit"),
                                run_bg(library.reapply))))
-        g.add(self._switch("Bei Vollbild pausieren", "Spart Leistung in Spielen und Videos",
+        g.add(self._switch(tr("Pause when fullscreen"), tr("Saves performance in games and videos"),
                            cfg["pause_fullscreen"], lambda on, _r: (
                                library.set_config(pause_fullscreen=on), run_bg(library.reapply))))
-        g.add(self._switch("Im Akkubetrieb pausieren", "Nur bei Geräten mit Akku",
+        g.add(self._switch(tr("Pause on battery"), tr("Only on devices with a battery"),
                            cfg["pause_battery"], lambda on, _r: (
                                library.set_config(pause_battery=on), run_bg(library.reapply))))
-        g.add(self._spin("Bildrate begrenzen", "0 = unbegrenzt. 30 spart spürbar Leistung.",
+        g.add(self._spin(tr("Limit frame rate"), tr("0 = unlimited. 30 noticeably saves power."),
                          0, 120, cfg["fps_limit"], "fps_limit"))
-        g.add(self._spin("Lautstärke", "0 = aus. Bei Vollbild und Pause stumm.",
+        g.add(self._spin(tr("Volume"), tr("0 = off. Muted when fullscreen or paused."),
                          0, 100, cfg["volume"], "volume"))
         page.add(g)
 
-        pool_names = ["Alle", FAV_CHIP] + library.all_tags()
+        pool_names = [tr("All"), FAV_CHIP] + library.all_tags()
         pool_keys = ["all", "fav"] + [f"tag:{t}" for t in library.all_tags()]
-        g = Adw.PreferencesGroup(title="Diashow",
-                                 description="Wechselt zwischen Wallpapern. Gilt auch für „Nächstes“ und „Zufällig“.")
-        g.add(self._switch("Diashow", None, cfg["slideshow"], lambda on, _r: (
+        g = Adw.PreferencesGroup(title=tr("Slideshow"),
+                                 description=tr("Switches between wallpapers. Also applies to “Next” and “Random”."))
+        g.add(self._switch(tr("Slideshow"), None, cfg["slideshow"], lambda on, _r: (
             library.set_config(slideshow=on), run_bg(library.reapply))))
-        g.add(self._spin("Wechsel alle … Minuten", None, 1, 240, cfg["interval"], "interval"))
-        pool = Adw.ComboRow(title="Auswahl", model=Gtk.StringList.new(pool_names))
+        g.add(self._spin(tr("Change every … minutes"), None, 1, 240, cfg["interval"], "interval"))
+        pool = Adw.ComboRow(title=tr("Selection"), model=Gtk.StringList.new(pool_names))
         if cfg["slideshow_pool"] in pool_keys:
             pool.set_selected(pool_keys.index(cfg["slideshow_pool"]))
         pool.connect("notify::selected", lambda r, _p: (
@@ -1087,16 +1099,16 @@ class Window(Adw.ApplicationWindow):
         g.add(pool)
         page.add(g)
 
-        g = Adw.PreferencesGroup(title="Tag und Nacht",
-                                 description="Wechselt automatisch je nach Uhrzeit. Ersetzt die Diashow.")
+        g = Adw.PreferencesGroup(title=tr("Day and night"),
+                                 description=tr("Switches automatically by time of day. Replaces the slideshow."))
         if len(items) >= 2:
             ids = [i["id"] for i in items]
-            sw = self._switch("Zeitplan", None, cfg["schedule"], lambda on, r: (
+            sw = self._switch(tr("Schedule"), None, cfg["schedule"], lambda on, r: (
                 None if library.set_schedule(on) else (
                     r.set_active(False),
-                    self._toast("Wähle zuerst ein Tag- und ein Nacht-Wallpaper"))))
-            day = Adw.ComboRow(title="Tag", model=Gtk.StringList.new(titles))
-            night = Adw.ComboRow(title="Nacht", model=Gtk.StringList.new(titles))
+                    self._toast(tr("Choose a day and a night wallpaper first")))))
+            day = Adw.ComboRow(title=tr("Day"), model=Gtk.StringList.new(titles))
+            night = Adw.ComboRow(title=tr("Night"), model=Gtk.StringList.new(titles))
             if cfg["day_id"] in ids:
                 day.set_selected(ids.index(cfg["day_id"]))
             if cfg["night_id"] in ids:
@@ -1112,45 +1124,54 @@ class Window(Adw.ApplicationWindow):
             g.add(sw)
             g.add(day)
             g.add(night)
-            g.add(self._spin("Tag beginnt um (Uhr)", None, 0, 23, cfg["day_start"], "day_start"))
-            g.add(self._spin("Nacht beginnt um (Uhr)", None, 0, 23, cfg["night_start"], "night_start"))
+            g.add(self._spin(tr("Day starts at (hour)"), None, 0, 23, cfg["day_start"], "day_start"))
+            g.add(self._spin(tr("Night starts at (hour)"), None, 0, 23, cfg["night_start"], "night_start"))
         else:
-            g.add(Adw.ActionRow(title="Mindestens zwei Wallpaper nötig",
-                                subtitle="Füge welche zur Bibliothek hinzu."))
+            g.add(Adw.ActionRow(title=tr("At least two wallpapers needed"),
+                                subtitle=tr("Add some to the library.")))
         page.add(g)
 
         mons = monitor_names()
-        g = Adw.PreferencesGroup(title="Monitore",
-                                 description="Wähle ein Wallpaper in der Bibliothek und setze es nur für einen Monitor.")
+        g = Adw.PreferencesGroup(title=tr("Monitors"),
+                                 description=tr("Pick a wallpaper in the library and set it for one monitor only."))
         assigned = library.load_config()["monitors"]
         by = {i["id"]: i["title"] for i in items}
         for n in mons:
-            g.add(Adw.ActionRow(title=n, subtitle=by.get(assigned.get(n), "Wie die anderen")))
-        reset = Adw.ActionRow(title="Alle Monitore gleich", subtitle="Entfernt einzelne Zuweisungen")
-        b = Gtk.Button(label="Zurücksetzen", valign=Gtk.Align.CENTER)
+            g.add(Adw.ActionRow(title=n, subtitle=by.get(assigned.get(n), tr("Same as the others"))))
+        reset = Adw.ActionRow(title=tr("Same on all monitors"), subtitle=tr("Removes individual assignments"))
+        b = Gtk.Button(label=tr("Reset"), valign=Gtk.Align.CENTER)
         b.connect("clicked", lambda _b: (library.set_config(monitors={}),
-                                         run_bg(library.reapply), self._toast("Zurückgesetzt")))
+                                         run_bg(library.reapply), self._toast(tr("Reset done"))))
         reset.add_suffix(b)
         g.add(reset)
         page.add(g)
 
-        g = Adw.PreferencesGroup(title="System")
-        g.add(self._switch("Beim Anmelden starten", None, library.AUTOSTART.exists(),
+        g = Adw.PreferencesGroup(title=tr("System"))
+        codes = [""] + available()
+        names = [tr("System default")] + [NAMES.get(c, c) for c in available()]
+        langrow = Adw.ComboRow(title=tr("Language"), subtitle=tr("Takes effect after restarting the app"),
+                               model=Gtk.StringList.new(names))
+        cur = cfg.get("language", "")
+        langrow.set_selected(codes.index(cur) if cur in codes else 0)
+        langrow.connect("notify::selected", lambda r, _p: library.set_config(
+            language=codes[r.get_selected()]))
+        g.add(langrow)
+        g.add(self._switch(tr("Start at login"), None, library.AUTOSTART.exists(),
                            lambda on, _r: library.set_autostart(on)))
-        g.add(self._switch("Standbild in GNOME setzen",
-                           "Für Übersicht und Sperrbildschirm. Im Flatpak braucht es die GNOME-Erweiterung aus dem Ordner gnome-extension.",
+        g.add(self._switch(tr("Set still image in GNOME"),
+                           tr("For the overview and lock screen. In the Flatpak this needs the GNOME extension from the gnome-extension folder."),
                            cfg["sync_system"], lambda on, _r: (
                                library.set_config(sync_system=on),
                                None if on else run_bg(library.restore_system_background))))
         page.add(g)
 
-        g = Adw.PreferencesGroup(title="Mediathek",
-                                 description="Pixabay braucht einen kostenlosen Schlüssel von pixabay.com/api/docs.")
-        key = Adw.PasswordEntryRow(title="Pixabay-API-Schlüssel")
+        g = Adw.PreferencesGroup(title=tr("Discover"),
+                                 description=tr("Pixabay needs a free key from pixabay.com/api/docs."))
+        key = Adw.PasswordEntryRow(title=tr("Pixabay API key"))
         key.set_text(cfg.get("pixabay_key", ""))
         key.connect("changed", lambda r: library.set_config(pixabay_key=r.get_text().strip()))
         g.add(key)
-        wkey = Adw.PasswordEntryRow(title="Wallhaven-API-Schlüssel (für nicht jugendfreie Inhalte)")
+        wkey = Adw.PasswordEntryRow(title=tr("Wallhaven API key (for NSFW content)"))
         wkey.set_text(cfg.get("wallhaven_key", ""))
 
         def wh_key(r):
@@ -1163,39 +1184,41 @@ class Window(Adw.ApplicationWindow):
         g.add(wkey)
         page.add(g)
 
-        g = Adw.PreferencesGroup(title="Sicherung",
-                                 description="Sichert Bibliothek, Tags, Favoriten und Einstellungen. Der Pixabay-Schlüssel wird nicht gesichert.")
-        row = Adw.ActionRow(title="Sicherung erstellen", subtitle="ZIP-Datei mit allen Wallpapern")
-        b = Gtk.Button(label="Exportieren", valign=Gtk.Align.CENTER)
+        g = Adw.PreferencesGroup(title=tr("Backup"),
+                                 description=tr("Backs up the library, tags, favorites and settings. API keys are not included."))
+        row = Adw.ActionRow(title=tr("Create backup"), subtitle=tr("ZIP file with all wallpapers"))
+        b = Gtk.Button(label=tr("Export"), valign=Gtk.Align.CENTER)
         b.connect("clicked", lambda _b: self._export())
         row.add_suffix(b)
         g.add(row)
-        row = Adw.ActionRow(title="Sicherung einspielen", subtitle="Fügt fehlende Wallpaper hinzu")
-        b = Gtk.Button(label="Importieren", valign=Gtk.Align.CENTER)
+        row = Adw.ActionRow(title=tr("Restore backup"), subtitle=tr("Adds missing wallpapers"))
+        b = Gtk.Button(label=tr("Import"), valign=Gtk.Align.CENTER)
         b.connect("clicked", lambda _b: self._import_backup())
         row.add_suffix(b)
         g.add(row)
         page.add(g)
 
-        g = Adw.PreferencesGroup(title="Speicher")
+        g = Adw.PreferencesGroup(title=tr("Storage"))
         row = Adw.ActionRow(
-            title="Zwischenspeicher leeren",
-            subtitle=f"{library.cache_size() / 1048576:.0f} MB Vorschaubilder · {len(items)} Wallpaper in der Bibliothek")
-        b = Gtk.Button(label="Leeren", valign=Gtk.Align.CENTER)
+            title=tr("Clear cache"),
+            subtitle=ntr("{mb} MB of thumbnails · {n} wallpaper in the library",
+                         "{mb} MB of thumbnails · {n} wallpapers in the library", len(items)).format(
+                mb=f"{library.cache_size() / 1048576:.0f}", n=len(items)))
+        b = Gtk.Button(label=tr("Clear"), valign=Gtk.Align.CENTER)
         b.connect("clicked", lambda _b: run_bg(library.clear_cache, lambda *_: (
-            row.set_subtitle("Geleert"), self._toast("Zwischenspeicher geleert"))))
+            row.set_subtitle(tr("Cleared")), self._toast(tr("Cache cleared")))))
         row.add_suffix(b)
         g.add(row)
         page.add(g)
 
         about = Adw.PreferencesGroup()
         about.add(Adw.ActionRow(title="OpenWallpaper",
-                                subtitle=f"Version {__version__} · GPL-3.0-or-later"))
+                                subtitle=tr("Version {} · GPL-3.0-or-later").format(__version__)))
         page.add(about)
         dlg.present(self)
 
     def _export(self):
-        dlg = Gtk.FileDialog(title="Sicherung speichern", initial_name="openwallpaper-sicherung.zip")
+        dlg = Gtk.FileDialog(title=tr("Save backup"), initial_name=tr("openwallpaper-backup.zip"))
         dlg.save(self, None, self._export_done)
 
     def _export_done(self, dlg, res):
@@ -1203,13 +1226,14 @@ class Window(Adw.ApplicationWindow):
             f = dlg.save_finish(res)
         except GLib.Error:
             return
-        self._toast("Erstelle Sicherung …")
+        self._toast(tr("Creating backup …"))
         run_bg(lambda: library.export_backup(f.get_path()), lambda n, e: self._toast(
-            f"Fehler: {e}" if e else f"Sicherung mit {n} Wallpapern erstellt"))
+            tr("Error: {}").format(e) if e else ntr(
+            "Backup with {n} wallpaper created", "Backup with {n} wallpapers created", n).format(n=n)))
 
     def _import_backup(self):
-        dlg = Gtk.FileDialog(title="Sicherung wählen")
-        flt = Gtk.FileFilter(name="OpenWallpaper-Sicherung")
+        dlg = Gtk.FileDialog(title=tr("Choose a backup"))
+        flt = Gtk.FileFilter(name=tr("OpenWallpaper backup"))
         flt.add_suffix("zip")
         store = Gio.ListStore.new(Gtk.FileFilter)
         store.append(flt)
@@ -1221,9 +1245,9 @@ class Window(Adw.ApplicationWindow):
             f = dlg.open_finish(res)
         except GLib.Error:
             return
-        self._toast("Spiele Sicherung ein …")
+        self._toast(tr("Restoring backup …"))
         run_bg(lambda: library.import_backup(f.get_path()),
-               lambda n, e: self._after_import(n or 0, e, "aus der Sicherung hinzugefügt"))
+               lambda n, e: self._after_import(n or 0, e, "backup"))
 
     def _on_close(self, _win):
         app = self.get_application()

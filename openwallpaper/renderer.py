@@ -14,6 +14,7 @@ gi.require_version("GstVideo", "1.0")
 from gi.repository import GLib, Gst, GstVideo  # noqa: E402
 
 from . import library  # noqa: E402
+from .i18n import tr  # noqa: E402
 
 X = ctypes.CDLL("libX11.so.6")
 XEXT = ctypes.CDLL("libXext.so.6")
@@ -212,7 +213,7 @@ class Output:
         item = self.items[self.index]
         if not self.sink_name:
             if not self.sinks:
-                print("Keine Videosenke verfuegbar", file=sys.stderr)
+                print(tr("No video sink available"), file=sys.stderr)
                 return
             self.sink_name = self.sinks.pop(0)
         sink = Gst.ElementFactory.make(self.sink_name, None)
@@ -267,7 +268,7 @@ class Output:
 
     def _on_error(self, _bus, msg):
         err, dbg = msg.parse_error()
-        print(f"Fehler ({self.name}):", err.message, dbg, file=sys.stderr)
+        print(tr("Error ({}):").format(self.name), err.message, dbg, file=sys.stderr)
         if self.sinks:
             self.sink_name = None
             return self.play()
@@ -402,7 +403,7 @@ def main():
     Gst.init(None)
     d = X.XOpenDisplay(None)
     if not d:
-        sys.exit("Kein X11-Display (Wayland wird noch nicht unterstuetzt)")
+        sys.exit(tr("No X11 display (Wayland is not supported yet)"))
     ctl = Controller(args, d)
     for sig in (signal.SIGTERM, signal.SIGINT):
         GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, sig, lambda: ctl.stop() or False)

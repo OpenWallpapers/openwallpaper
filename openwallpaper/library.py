@@ -12,6 +12,7 @@ import zipfile
 from pathlib import Path
 
 from . import APP_ID
+from .i18n import tr
 
 HOME = Path.home()
 DATA = Path(os.environ.get("XDG_DATA_HOME", HOME / ".local/share")) / "openwallpaper"
@@ -50,7 +51,7 @@ DEFAULTS = {
     "monitors": {},
     "pixabay_key": "", "wallhaven_key": "", "source": "Wallhaven", "paused": False,
     "wh_purity": "100", "wh_categories": "111", "wh_atleast": "", "wh_ratio": "",
-    "adult_ok": False,
+    "adult_ok": False, "language": "",
 }
 
 
@@ -185,7 +186,7 @@ def _import_copy(path):
     return dest
 
 
-def _add(path, title=None, source="Lokal", license="", author="", url="",
+def _add(path, title=None, source=tr("Local"), license="", author="", url="",
          copy=True, size="", tags=None):
     kind = kind_of(path)
     if not kind:
@@ -217,7 +218,7 @@ def _add(path, title=None, source="Lokal", license="", author="", url="",
     return item, True
 
 
-def add_item(path, title=None, source="Lokal", license="", author="", url="",
+def add_item(path, title=None, source=tr("Local"), license="", author="", url="",
              copy=True, size="", tags=None):
     return _add(path, title, source, license, author, url, copy, size, tags)[0]
 
@@ -305,7 +306,7 @@ def import_steam():
             media = proj.parent / meta.get("file", "")
             if media.is_file():
                 _, is_new = _add(media, meta.get("title"), "Wallpaper Engine",
-                                 "Urheber beachten", copy=False)
+                                 tr("Rights belong to the authors"), copy=False)
                 added += is_new
     return added, roots
 
@@ -331,7 +332,7 @@ def import_backup(src):
     with zipfile.ZipFile(src) as z:
         names = set(z.namelist())
         if "library.json" not in names:
-            raise RuntimeError("Das ist keine OpenWallpaper-Sicherung")
+            raise RuntimeError(tr("This is not an OpenWallpaper backup"))
         incoming = json.loads(z.read("library.json"))
         items = load_items()
         ids = {i["id"] for i in items}
