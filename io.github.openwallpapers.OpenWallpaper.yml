@@ -28,7 +28,10 @@ modules:
       - install -Dm644 data/io.github.openwallpapers.OpenWallpaper.svg /app/share/icons/hicolor/scalable/apps/io.github.openwallpapers.OpenWallpaper.svg
       - install -Dm644 data/io.github.openwallpapers.OpenWallpaper-symbolic.svg /app/share/icons/hicolor/symbolic/apps/io.github.openwallpapers.OpenWallpaper-symbolic.svg
     sources:
-      - type: dir
+      - type: git
+        url: https://github.com/OpenWallpapers/openwallpaper.git
+        tag: v1.0.0
+        commit: 55f5ddfcb00730eb8c60f58f01e7ed17cb60783c
         path: .
         skip:
           - .git
