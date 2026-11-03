@@ -1,0 +1,7 @@
+{
+  "uuid": "openwallpaper-bg@openwallpapers.github.io",
+  "name": "OpenWallpaper Hintergrund",
+  "description": "Setzt das Standbild von OpenWallpaper als GNOME-Hintergrund (Übersicht, Sperrbildschirm). Nur nötig, wenn OpenWallpaper als Flatpak läuft.",
+  "shell-version": ["48", "49", "50"],
+  "url": "https://github.com/OpenWallpapers/openwallpaper"
+}

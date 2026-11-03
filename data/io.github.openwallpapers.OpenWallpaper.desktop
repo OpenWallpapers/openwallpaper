@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=OpenWallpaper
+Comment=Live-Wallpaper für Linux
+Comment[en]=Live wallpapers for Linux
+Exec=openwallpaper
+Icon=io.github.openwallpapers.OpenWallpaper
+Terminal=false
+Categories=GTK;Settings;DesktopSettings;
+Keywords=wallpaper;hintergrund;background;video;live;
+StartupNotify=true
